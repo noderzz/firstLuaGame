@@ -10,8 +10,8 @@ function love.load()
 
     target = {}
     target.radius = 50
-    target.x = math.random(target.radius + 10, window_length - target.radius - 10)
-    target.y = math.random(target.radius + 10, window_height - target.radius - 10)
+    target.x = math.random(target.radius, window_height-target.radius)
+    target.y = math.random(target.radius, window_length-target.radius)
     
     timer = 0
 
@@ -56,8 +56,8 @@ function love.mousepressed( x, y, button, istouch, presses )
         local mouseToTarget = distanceBetween(x, y, target.x, target.y)
         if mouseToTarget < target.radius then
             score = score + 1
-            target.x = math.random(target.radius + 10, window_length - target.radius - 10)
-            target.y = math.random(target.radius + 10, window_height - target.radius - 10)
+            target.x = math.random(target.radius, window_height-target.radius)
+            target.y = math.random(target.radius, window_length-target.radius)
         end
     end
 end
