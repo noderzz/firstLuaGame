@@ -9,9 +9,9 @@ function love.load()
     score_x_coordinate = (window_length/2)
 
     target = {}
-    target.x = 100
-    target.y = 100
     target.radius = 50
+    target.x = math.random(target.radius + 10, window_length - target.radius - 10)
+    target.y = math.random(target.radius + 10, window_height - target.radius - 10)
     
     timer = 0
 
@@ -35,17 +35,19 @@ function love.draw()
     local textWidth = gameFont:getWidth("Score")
     love.graphics.print("SCORE",(score_x_coordinate+(score_length/2)-(score_length-textWidth)/1.3),0)
 
-    love.graphics.setColor((144/255),(169/255),(183/255))
-    love.graphics.circle("fill",target.x,target.y,target.radius)
-
     -- Update 'Score' in real time.
     if type(score) == "number" and score >= 10 and score <= 99 then
         font_adjustment = 30
-    elseif type(score) == "number" and score >= 10 and score <= 999 then
+    elseif type(score) == "number" and score >= 100 and score <= 999 then
         font_adjustment = 45
+    else
+        font_adjustment = 15
     end
     love.graphics.setFont(gameFont)
     love.graphics.print(score,(score_x_coordinate+(score_length/2)-font_adjustment),50)
+
+    love.graphics.setColor((144/255),(169/255),(183/255))
+    love.graphics.circle("fill",target.x,target.y,target.radius)
 end
 
 function love.mousepressed( x, y, button, istouch, presses )
@@ -54,6 +56,8 @@ function love.mousepressed( x, y, button, istouch, presses )
         local mouseToTarget = distanceBetween(x, y, target.x, target.y)
         if mouseToTarget < target.radius then
             score = score + 1
+            target.x = math.random(target.radius + 10, window_length - target.radius - 10)
+            target.y = math.random(target.radius + 10, window_height - target.radius - 10)
         end
     end
 end
